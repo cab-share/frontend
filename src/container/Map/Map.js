@@ -20,6 +20,8 @@ function Map({autocomplete, setAutocomplete}){
 
   const [libraries, setLibraries] = useState(["places"]);
 
+  const [address, setAddress] = useState("");
+
   function onLoadAutocomplete (autoComplete) {
     console.log('autocomplete: ', autoComplete)
     setAutocomplete(autoComplete);
@@ -42,6 +44,9 @@ function Map({autocomplete, setAutocomplete}){
           lng : lng
         }
         setCoordinates(tempCoordinates);
+        setDragedCoordinates(tempCoordinates);
+        if(place?.formatted_address)
+          setAddress(place.formatted_address)
       }      
     } else {
       console.log('Autocomplete is not loaded yet!')
@@ -64,8 +69,19 @@ function Map({autocomplete, setAutocomplete}){
   function onCLickConfirmPickUp(e){
     console.log("Clicked confirm location", dragedCoordinates);
 
-    
+  }
 
+  function onClickGoogleMap(e){
+    console.log("on click google map: ", e);
+    let dragedLat = e?.latLng?.lat();
+    let dragedLng = e?.latLng?.lng();
+    console.log(dragedLat, dragedLng);
+    if(dragedLat && dragedLng){
+      setDragedCoordinates({
+        lat: dragedLat,
+        lng: dragedLng
+      });
+    }
   }
 
   let mapContainerStyle = {
@@ -89,6 +105,7 @@ function Map({autocomplete, setAutocomplete}){
         zoom={15}
         center={coordinates}  
         options={options}
+        onClick={onClickGoogleMap}
       >
         <Autocomplete
           onLoad={onLoadAutocomplete}
@@ -98,12 +115,17 @@ function Map({autocomplete, setAutocomplete}){
             type="text"
             placeholder="Enter pickup location"
             className= { classes["autocompleteInput"]}
+            value={address}
+            onChange={ (e)=>{
+              console.log(e.target.value);
+              setAddress(e.target.value)
+            } }
           />
         </Autocomplete>
 
         <MarkerF
           onLoad={onLoadMarker}
-          position={coordinates}
+          position={dragedCoordinates}
           draggable={true}
           onDrag={onDragMarker}
         />
