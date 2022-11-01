@@ -3,7 +3,7 @@ import {useState } from "react";
 import classes from "./Map.module.css"
 
 
-function Map({autoComplete, setAutoComplete}){
+function Map({autocomplete, setAutoComplete}){
 
   const [coordinates, setCoordinates ] = useState({
     latitude :  12.971891,
