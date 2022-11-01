@@ -1,7 +1,7 @@
 .autocompleteInput{
     box-sizing:  border-box ;
     border:  1px solid transparent ;
-    width:  240px ;
+    width:  400px ;
     height:  32px ;
     padding:  0 12px ;
     border-radius:  3px ;
@@ -11,22 +11,31 @@
     text-overflow:  ellipses ;
     position:  absolute ;
     left:  auto;
-    margin-left:  -120px;
+    margin-left:  -200px;
     margin-top: 20px; 
+}
+
+.btn-pickup{
+    box-sizing:  border-box ;
+    border:  1px solid transparent ;
+    width:  200px ;
+    height:  40px ;
+    padding:  0 12px ;
+    font-size:  15px ;
+    position:  absolute ;
+    left:  auto;
+    margin-left:  -100px;
+    bottom: 20px;
 }
 
 /* For Mobile */
 @media screen and (max-width: 540px) {
     .autocompleteInput{
         width: 90%;
-        left: auto;
         margin-left: -45%;
     }
-}
-
-/* For Tablets */
-@media screen and (min-width: 540px) and (max-width: 780px) {
-    .view {
-        width: 600px;
+    .btn-pickup{
+        width: 50%;
+        margin-left: -25%;
     }
 }

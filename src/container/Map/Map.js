@@ -40,6 +40,13 @@ function Map({autocomplete, setAutocomplete}){
     }
   }
 
+  function onDragMarker(e){ 
+    console.log("on drag marker",  );
+    let dragedLat = e?.latLng?.lat();
+    let dragedLng = e?.latLng?.lng();
+    console.log(dragedLat, dragedLng);
+  }
+
   let mapContainerStyle = {
     height: "100vh",
     width: "100%",
@@ -77,13 +84,20 @@ function Map({autocomplete, setAutocomplete}){
           onLoad={onLoadMarker}
           position={coordinates}
           draggable={true}
-          style={{
-            zIndex: "10"
-          }}
+          onDrag={onDragMarker}
         />
+
+       <button 
+        type="button" 
+        className={ "btn btn btn-dark " + classes["btn-pickup"] }
+        >
+          Confirm Pickup
+        </button>
+
         
         </GoogleMap>
       </LoadScript>
+
     </div>
 }
 
