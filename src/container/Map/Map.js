@@ -63,7 +63,7 @@ function Map({autocomplete, setAutocomplete}){
 
   function onCLickConfirmPickUp(e){
     console.log("Clicked confirm location", dragedCoordinates);
-    
+
     
 
   }
