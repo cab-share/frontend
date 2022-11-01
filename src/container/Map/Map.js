@@ -3,9 +3,8 @@ import {useState } from "react";
 import classes from "./Map.module.css"
 
 
-function Map(){
+function Map({autoComplete, setAutoComplete}){
 
-  const [autocomplete, setAutoComplete] = useState(null);
   const [coordinates, setCoordinates ] = useState({
     latitude :  12.971891,
     longitude : 77.641151
@@ -41,13 +40,10 @@ function Map(){
     width: "100%",
   }
 
-    
-
   const center = {
       lat: coordinates.latitude,
       lng: coordinates.longitude
   }
-
 
   const options = {
       disableDefaultUI: true,
