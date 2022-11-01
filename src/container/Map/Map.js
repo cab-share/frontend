@@ -4,95 +4,104 @@ import classes from "./Map.module.css"
 
 
 
-function Map({autocomplete, setAutocomplete}){
+function Map(){
 
-  const [coordinates, setCoordinates] = useState({
-    lat :  12.971891,
-    lng : 77.641151
-  });
+  const PICK_CONST = "Pick";
+  const DROP_CONST = "Drop";
+  const intialCoordiante = { lat :  12.971891, lng : 77.641151};
+  const [locationSelector, setLocationSelector ] = useState(PICK_CONST);
 
-  const [dragedCoordinates, setDragedCoordinates ] = useState({
-    lat :  12.971891,
-    lng : 77.641151
-  });
 
-  const [map, setMap] = useState(null);
+  const [pickAutocomplete, setPickAutocomplete] = useState(null);
+  const [dropAutocomplete, setDropAutocomplete] = useState(null);
 
-  const [libraries, setLibraries] = useState(["places"]);
+  const [pickCoordinates, setPickCoordiantes ] = useState(null);
+  const [dropCoordinates, setDropCoordiantes ] = useState(null);
 
-  const [address, setAddress] = useState("");
+  const [dragedPickCoordinates, setDragedPickCoordinates ] = useState({...intialCoordiante});
+  const [dragedDropCoordinates, setDragedDropCoordinates ] = useState({...intialCoordiante});
+  
+  
+  const [libraries] = useState(["places"]);
 
-  function onLoadAutocomplete (autoComplete) {
-    console.log('autocomplete: ', autoComplete)
-    setAutocomplete(autoComplete);
-  }
+  const [pickAddress, setPickAddress] = useState("");
+  const [dropAddress, setDropAddress] = useState("");
 
-  function onLoadMarker(marker){
-    console.log("marker: ", marker); 
-  }
 
   function onPlaceChanged () {
+    let autocomplete = (locationSelector === PICK_CONST ? pickAutocomplete :  dropAutocomplete );
+
     if (autocomplete !== null) {
       let place = autocomplete.getPlace();
-      console.log("place: ", place);
+      console.log("place: " , place);
       let lat = place?.geometry?.location?.lat();
       let lng = place?.geometry?.location?.lng();
       if(lat && lng){
         let tempCoordinates = {
-          ...coordinates,
           lat : lat,
           lng : lng
         }
-        setCoordinates(tempCoordinates);
-        setDragedCoordinates(tempCoordinates);
-        if(place?.formatted_address)
-          setAddress(place.formatted_address)
-      }      
+        if(locationSelector === PICK_CONST){
+          setPickCoordiantes(tempCoordinates);
+          if(place?.formatted_address)
+            setPickAddress(place.formatted_address);
+          setDragedPickCoordinates(tempCoordinates);
+        }
+        else if(locationSelector === DROP_CONST){
+          setDropCoordiantes(tempCoordinates);
+          if(place?.formatted_address)
+            setDropAddress(place.formatted_address);
+          setDragedDropCoordinates(tempCoordinates);
+        }
+      }
     } else {
       console.log('Autocomplete is not loaded yet!')
     }
   }
 
   function onDragMarker(e){ 
-    console.log("on drag marker");
+    console.log("On drag marker: ", locationSelector);
     let dragedLat = e?.latLng?.lat();
     let dragedLng = e?.latLng?.lng();
     console.log(dragedLat, dragedLng);
     if(dragedLat && dragedLng){
-      setDragedCoordinates({
-        lat: dragedLat,
-        lng: dragedLng
-      });
+      let tempCoordinates = {
+        lat : dragedLat,
+        lng : dragedLng
+      }
+      if(locationSelector === PICK_CONST){
+        console.log("A");
+        setDragedPickCoordinates(tempCoordinates);
+      }
+      else if(locationSelector === DROP_CONST){
+        console.log("B");
+
+        setDragedDropCoordinates(tempCoordinates);
+      }
     }
   }
 
-  function onCLickConfirmPickUp(e){
-    console.log("Clicked confirm location", dragedCoordinates);
+  // function onClickGoogleMap(e){
+  //   console.log("on click google map: ", e);
+  //   let dragedLat = e?.latLng?.lat();
+  //   let dragedLng = e?.latLng?.lng();
+  //   console.log(dragedLat, dragedLng);
+  //   if(dragedLat && dragedLng){
+  //     setDragedCoordinates({
+  //       lat: dragedLat,
+  //       lng: dragedLng
+  //     });
+  //   }
+  // }
 
+  function onClickConfirmPickLocation(e){
+    console.log("Clicked confirm pick location");
   }
 
-  function onClickGoogleMap(e){
-    console.log("on click google map: ", e);
-    let dragedLat = e?.latLng?.lat();
-    let dragedLng = e?.latLng?.lng();
-    console.log(dragedLat, dragedLng);
-    if(dragedLat && dragedLng){
-      setDragedCoordinates({
-        lat: dragedLat,
-        lng: dragedLng
-      });
-    }
+  function onClickConfirmDropLocation(e){
+    console.log("Clicked confirm drop location");
   }
 
-  let mapContainerStyle = {
-    height: "100vh",
-    width: "100%",
-  }
-
-
-  const options = {
-      disableDefaultUI: true,
-  }
 
   return <div>
     <LoadScript 
@@ -101,48 +110,97 @@ function Map({autocomplete, setAutocomplete}){
     >
       <GoogleMap
         id="google-map"
-        mapContainerStyle={mapContainerStyle}
+        mapContainerStyle={{ height: "100vh", width: "100%",}}
         zoom={15}
-        center={coordinates}  
-        options={options}
-        onClick={onClickGoogleMap}
+        center={ locationSelector == PICK_CONST ? pickCoordinates : dropCoordinates}  
+        options={{ disableDefaultUI: true}}
+        // onClick={onClickGoogleMap}
       >
-        <Autocomplete
-          onLoad={onLoadAutocomplete}
-          onPlaceChanged={onPlaceChanged}
-        >
-          <input
-            type="text"
-            placeholder="Enter pickup location"
-            className= { classes["autocompleteInput"]}
-            value={address}
-            onChange={ (e)=>{
-              console.log(e.target.value);
-              setAddress(e.target.value)
-            } }
-          />
-        </Autocomplete>
 
-        <MarkerF
-          onLoad={onLoadMarker}
-          position={dragedCoordinates}
-          draggable={true}
-          onDrag={onDragMarker}
-        />
+        <div className={classes["location-container"]} >
+          {/* Pick location */}
+          <Autocomplete
+            onLoad={ autocompletePick => {setPickAutocomplete(autocompletePick)}}
+            onPlaceChanged={onPlaceChanged}
+          >
+            <input
+              type="text"
+              placeholder="Enter pick location"
+              className= { classes["autocompleteInput"]}
+              value={pickAddress}
+              onChange={ (e)=>{
+                console.log("Pick address: ", e.target.value);
+                setPickAddress(e.target.value)
+              }}
+              onFocus={()=>{setLocationSelector(PICK_CONST)}}
+            />
+          </Autocomplete>
 
-       <button 
-        type="button" 
-        className={ "btn btn btn-dark " + classes["btn-pickup"] }
-        onClick={onCLickConfirmPickUp}
-        >
-          Confirm Pickup
-        </button>
-
+          {/* Drop location */}
+          <Autocomplete
+            onLoad={ autocompletePick => {setDropAutocomplete(autocompletePick)}}
+            onPlaceChanged={onPlaceChanged}
+          >
+            <input
+              type="text"
+              placeholder="Enter drop location"
+              className= { classes["autocompleteInput"]}
+              value={dropAddress}
+              onChange={ (e)=>{
+                console.log("Drop address: ", e.target.value);
+                setDropAddress(e.target.value)
+              }}
+              onFocus={()=>{setLocationSelector(DROP_CONST)}}
+            />
+          </Autocomplete>
+        </div>
         
+        
+        {/* Marker */}
+        
+        {/* {
+          dragedDropCoordinates ?
+          <MarkerF
+            position={dragedDropCoordinates}
+            draggable={locationSelector === DROP_CONST}
+            onDrag={onDragMarker}
+            icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+          />:
+          null
+        }
+
+        {
+          dragedPickCoordinates ?
+          <MarkerF
+            position={dragedPickCoordinates}
+            draggable={locationSelector === PICK_CONST}
+            onDrag={onDragMarker}
+          />:
+          null
+        } */}
+
+        {/* Confirm button */}
+        { 
+          locationSelector === PICK_CONST ? 
+          confirmBtn(onClickConfirmPickLocation) : 
+          confirmBtn(onClickConfirmDropLocation)   
+        }
+
         </GoogleMap>
       </LoadScript>
 
     </div>
+}
+
+
+function confirmBtn(onClickHandler){
+  return <button 
+            type="button" 
+            className={ "btn btn btn-dark " + classes["btn-pickup"] }
+            onClick={onClickHandler}
+          >
+            Confirm
+          </button> 
 }
 
 
