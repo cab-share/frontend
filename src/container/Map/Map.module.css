@@ -10,7 +10,23 @@
     outline:  none ;
     text-overflow:  ellipses ;
     position:  absolute ;
-    left:  50% ;
-    margin-left:  -120px 
+    left:  auto;
+    margin-left:  -120px;
+    margin-top: 20px; 
 }
 
+/* For Mobile */
+@media screen and (max-width: 540px) {
+    .autocompleteInput{
+        width: 90%;
+        left: auto;
+        margin-left: -45%;
+    }
+}
+
+/* For Tablets */
+@media screen and (min-width: 540px) and (max-width: 780px) {
+    .view {
+        width: 600px;
+    }
+}

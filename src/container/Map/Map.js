@@ -3,7 +3,7 @@ import {useState } from "react";
 import classes from "./Map.module.css"
 
 
-function Map({autocomplete, setAutoComplete}){
+function Map({autocomplete, setAutocomplete}){
 
   const [coordinates, setCoordinates ] = useState({
     latitude :  12.971891,
@@ -13,7 +13,7 @@ function Map({autocomplete, setAutoComplete}){
 
   function onLoad (autoComplete) {
     console.log('autocomplete: ', autoComplete)
-    setAutoComplete(autoComplete);
+    setAutocomplete(autoComplete);
   }
 
   function onPlaceChanged () {
@@ -67,7 +67,7 @@ function Map({autocomplete, setAutoComplete}){
         >
           <input
             type="text"
-            placeholder="Customized your placeholder"
+            placeholder="Enter pickup location"
             className= { classes["autocompleteInput"]}
           />
         </Autocomplete>
@@ -82,33 +82,6 @@ export default Map;
 
 
 
-
-
-
-//           <Autocomplete
-//             onLoad={this.onLoad}
-//             onPlaceChanged={this.onPlaceChanged}
-//           >
-//             <input
-//               type="text"
-//               placeholder="Customized your placeholder"
-//               style={{
-//                 boxSizing: `border-box`,
-//                 border: `1px solid transparent`,
-//                 width: `240px`,
-//                 height: `32px`,
-//                 padding: `0 12px`,
-//                 borderRadius: `3px`,
-//                 boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-//                 fontSize: `14px`,
-//                 outline: `none`,
-//                 textOverflow: `ellipses`,
-//                 position: "absolute",
-//                 left: "50%",
-//                 marginLeft: "-120px"
-//               }}
-//             />
-//           </Autocomplete>
 
 
 
