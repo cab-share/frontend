@@ -112,7 +112,7 @@ function Map(){
         id="google-map"
         mapContainerStyle={{ height: "100vh", width: "100%",}}
         zoom={15}
-        center={ locationSelector == PICK_CONST ? pickCoordinates : dropCoordinates}  
+        center={ locationSelector === PICK_CONST ? pickCoordinates : dropCoordinates}  
         options={{ disableDefaultUI: true}}
         // onClick={onClickGoogleMap}
       >
@@ -158,7 +158,7 @@ function Map(){
         
         {/* Marker */}
         
-        {/* {
+        {
           dragedDropCoordinates ?
           <MarkerF
             position={dragedDropCoordinates}
@@ -177,7 +177,7 @@ function Map(){
             onDrag={onDragMarker}
           />:
           null
-        } */}
+        } 
 
         {/* Confirm button */}
         { 
