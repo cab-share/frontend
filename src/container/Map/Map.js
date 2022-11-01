@@ -1,32 +1,37 @@
-import {GoogleMap, LoadScript, useJsApiLoader, Autocomplete } from '@react-google-maps/api';
+import {GoogleMap, LoadScript, Autocomplete, MarkerF} from '@react-google-maps/api';
 import {useState } from "react";
 import classes from "./Map.module.css"
 
 
 function Map({autocomplete, setAutocomplete}){
 
-  const [coordinates, setCoordinates ] = useState({
-    latitude :  12.971891,
-    longitude : 77.641151
+  const [coordinates, setCoordinates] = useState({
+    lat :  12.971891,
+    lng : 77.641151
   });
+
   const [libraries, setLibraries] = useState(["places"]);
 
-  function onLoad (autoComplete) {
+  function onLoadAutocomplete (autoComplete) {
     console.log('autocomplete: ', autoComplete)
     setAutocomplete(autoComplete);
+  }
+
+  function onLoadMarker(marker){
+    console.log("marker: ", marker); 
   }
 
   function onPlaceChanged () {
     if (autocomplete !== null) {
       let place = autocomplete.getPlace();
-      console.log(place);
+      console.log("place: ", place);
       let lat = place?.geometry?.location?.lat();
       let lng = place?.geometry?.location?.lng();
       if(lat && lng){
         let tempCoordinates = {
           ...coordinates,
-          latitude : lat,
-          longitude : lng
+          lat : lat,
+          lng : lng
         }
         setCoordinates(tempCoordinates);
       }      
@@ -40,10 +45,6 @@ function Map({autocomplete, setAutocomplete}){
     width: "100%",
   }
 
-  const center = {
-      lat: coordinates.latitude,
-      lng: coordinates.longitude
-  }
 
   const options = {
       disableDefaultUI: true,
@@ -55,14 +56,14 @@ function Map({autocomplete, setAutocomplete}){
       libraries={libraries} 
     >
       <GoogleMap
-        id="searchbox-example"
+        id="google-map"
         mapContainerStyle={mapContainerStyle}
         zoom={15}
-        center={center}  
+        center={coordinates}  
         options={options}  
       >
         <Autocomplete
-          onLoad={onLoad}
+          onLoad={onLoadAutocomplete}
           onPlaceChanged={onPlaceChanged}
         >
           <input
@@ -71,6 +72,16 @@ function Map({autocomplete, setAutocomplete}){
             className= { classes["autocompleteInput"]}
           />
         </Autocomplete>
+
+        <MarkerF
+          onLoad={onLoadMarker}
+          position={coordinates}
+          draggable={true}
+          style={{
+            zIndex: "10"
+          }}
+        />
+        
         </GoogleMap>
       </LoadScript>
     </div>
