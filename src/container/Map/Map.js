@@ -1,6 +1,7 @@
-import {GoogleMap, LoadScript, Autocomplete, MarkerF} from '@react-google-maps/api';
+import {GoogleMap, LoadScript, Autocomplete, MarkerF, } from '@react-google-maps/api';
 import {useState } from "react";
 import classes from "./Map.module.css"
+
 
 
 function Map({autocomplete, setAutocomplete}){
@@ -9,6 +10,13 @@ function Map({autocomplete, setAutocomplete}){
     lat :  12.971891,
     lng : 77.641151
   });
+
+  const [dragedCoordinates, setDragedCoordinates ] = useState({
+    lat :  12.971891,
+    lng : 77.641151
+  });
+
+  const [map, setMap] = useState(null);
 
   const [libraries, setLibraries] = useState(["places"]);
 
@@ -41,10 +49,23 @@ function Map({autocomplete, setAutocomplete}){
   }
 
   function onDragMarker(e){ 
-    console.log("on drag marker",  );
+    console.log("on drag marker");
     let dragedLat = e?.latLng?.lat();
     let dragedLng = e?.latLng?.lng();
     console.log(dragedLat, dragedLng);
+    if(dragedLat && dragedLng){
+      setDragedCoordinates({
+        lat: dragedLat,
+        lng: dragedLng
+      });
+    }
+  }
+
+  function onCLickConfirmPickUp(e){
+    console.log("Clicked confirm location", dragedCoordinates);
+    
+    
+
   }
 
   let mapContainerStyle = {
@@ -67,7 +88,7 @@ function Map({autocomplete, setAutocomplete}){
         mapContainerStyle={mapContainerStyle}
         zoom={15}
         center={coordinates}  
-        options={options}  
+        options={options}
       >
         <Autocomplete
           onLoad={onLoadAutocomplete}
@@ -90,6 +111,7 @@ function Map({autocomplete, setAutocomplete}){
        <button 
         type="button" 
         className={ "btn btn btn-dark " + classes["btn-pickup"] }
+        onClick={onCLickConfirmPickUp}
         >
           Confirm Pickup
         </button>
