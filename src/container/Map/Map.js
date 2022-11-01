@@ -37,7 +37,7 @@ function Map(){
   }
 
   let mapContainerStyle = {
-    height: "400px",
+    height: "100vh",
     width: "100%",
   }
 
