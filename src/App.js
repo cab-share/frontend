@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import {  BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {  BrowserRouter as Router, Route, Routes, HashRouter } from "react-router-dom";
 
 import './App.css';
 import Map from './container/Map/Map.js'
@@ -13,7 +13,7 @@ function App() {
   return (
     <div className='App' >
       <div className='App-header'>
-        <Router>
+        <HashRouter>
           <Routes>
             <Route 
               path="/" 
@@ -32,7 +32,7 @@ function App() {
                 />} 
             />
           </Routes>
-        </Router>
+        </HashRouter>
       </div>
     </div>
   );
