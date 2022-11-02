@@ -1,6 +1,6 @@
-import {GoogleMap, LoadScript, Autocomplete, MarkerF, InfoBox } from '@react-google-maps/api';
+import {GoogleMap, LoadScript, Autocomplete, MarkerF } from '@react-google-maps/api';
 import {useEffect, useState } from "react";
-import { Link, RedirectFunction, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import classes from "./Map.module.css"
 
 
@@ -38,7 +38,7 @@ function Map({pickCoordinates, dropCoordinates, setPickCoordiantes, setDropCoord
     if(isConfirmed){
       navigate("/select-slot");
     }
-  }, [isConfirmed ] )
+  }, [isConfirmed, navigate] )
 
 
   function onPlaceChanged () {
