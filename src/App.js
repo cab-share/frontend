@@ -15,7 +15,8 @@ function App() {
   return (
     <div className='App' >
       <div className='App-header'>
-        <Router>
+        "Hello"
+        {/* <Router>
           <Routes>
             <Route 
               path="/" 
@@ -34,7 +35,7 @@ function App() {
                 />} 
             />
           </Routes>
-        </Router>
+        </Router> */}
       </div>
     </div>
   );
