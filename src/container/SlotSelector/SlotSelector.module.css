@@ -1,0 +1,53 @@
+.container{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: whitesmoke
+    
+    ;
+    height: fit-content;
+    width: 400px;
+    padding: 20px;
+    margin: auto;
+    border-radius: 5px;
+    box-shadow:  0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.row{
+    margin-top: 20px;
+}
+
+.col{
+    float: left;
+    width: 48%;
+    margin: 1%;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: small;
+    box-shadow:  0 2px 6px rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+}
+
+.active {
+    background-color: wheat;
+}
+
+.btn-confirm{
+    margin-top: 20px;
+    box-sizing:  border-box ;
+    border:  1px solid transparent ;
+    width:  200px ;
+    height:  40px ;
+    padding:  0 12px ;
+    font-size:  15px ;
+    bottom: 80px;
+}
+
+/* For Mobile */
+@media screen and (max-width: 540px) {
+    .container{
+        width: 90%;
+    }
+}

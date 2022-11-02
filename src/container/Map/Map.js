@@ -1,10 +1,13 @@
-import {GoogleMap, LoadScript, Autocomplete, MarkerF, } from '@react-google-maps/api';
-import {useState } from "react";
+import {GoogleMap, LoadScript, Autocomplete, MarkerF, InfoBox } from '@react-google-maps/api';
+import {useEffect, useState } from "react";
+import { Link, RedirectFunction, useNavigate } from 'react-router-dom';
 import classes from "./Map.module.css"
 
 
 
-function Map(){
+function Map({pickCoordinates, dropCoordinates, setPickCoordiantes, setDropCoordiantes }){
+
+  const navigate =  useNavigate();
 
   const PICK_CONST = "Pick";
   const DROP_CONST = "Drop";
@@ -15,8 +18,6 @@ function Map(){
   const [pickAutocomplete, setPickAutocomplete] = useState(null);
   const [dropAutocomplete, setDropAutocomplete] = useState(null);
 
-  const [pickCoordinates, setPickCoordiantes ] = useState(null);
-  const [dropCoordinates, setDropCoordiantes ] = useState(null);
 
   const [dragedPickCoordinates, setDragedPickCoordinates ] = useState({...intialCoordiante});
   const [dragedDropCoordinates, setDragedDropCoordinates ] = useState({...intialCoordiante});
@@ -26,6 +27,18 @@ function Map(){
 
   const [pickAddress, setPickAddress] = useState("");
   const [dropAddress, setDropAddress] = useState("");
+
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  function setConfirmed(){
+    setIsConfirmed(true);
+  }
+  
+  useEffect( ()=>{
+    if(isConfirmed){
+      navigate("/select-slot");
+    }
+  }, [isConfirmed ] )
 
 
   function onPlaceChanged () {
@@ -81,26 +94,25 @@ function Map(){
     }
   }
 
-  // function onClickGoogleMap(e){
-  //   console.log("on click google map: ", e);
-  //   let dragedLat = e?.latLng?.lat();
-  //   let dragedLng = e?.latLng?.lng();
-  //   console.log(dragedLat, dragedLng);
-  //   if(dragedLat && dragedLng){
-  //     setDragedCoordinates({
-  //       lat: dragedLat,
-  //       lng: dragedLng
-  //     });
-  //   }
-  // }
+  function onClickGoogleMap(e){
+    console.log("on click google map: ", e);
+    let dragedLat = e?.latLng?.lat();
+    let dragedLng = e?.latLng?.lng();
+    console.log(dragedLat, dragedLng);
+    if(dragedLat && dragedLng){
+      const tempCoordinates = {
+        lat: dragedLat,
+        lng: dragedLng
+      };
 
-  function onClickConfirmPickLocation(e){
-    console.log("Clicked confirm pick location");
+      if(locationSelector === PICK_CONST)
+        setDragedPickCoordinates(tempCoordinates);
+      if(locationSelector === DROP_CONST)
+        setDragedDropCoordinates(tempCoordinates);
+    }
   }
 
-  function onClickConfirmDropLocation(e){
-    console.log("Clicked confirm drop location");
-  }
+  
 
 
   return <div>
@@ -113,8 +125,8 @@ function Map(){
         mapContainerStyle={{ height: "100vh", width: "100%",}}
         zoom={15}
         center={ locationSelector === PICK_CONST ? pickCoordinates : dropCoordinates}  
-        options={{ disableDefaultUI: true}}
-        // onClick={onClickGoogleMap}
+        options={{ disableDefaultUI: true, info: false}}
+        onClick={onClickGoogleMap}
       >
 
         <div className={classes["location-container"]} >
@@ -180,12 +192,13 @@ function Map(){
         } 
 
         {/* Confirm button */}
-        { 
-          locationSelector === PICK_CONST ? 
-          confirmBtn(onClickConfirmPickLocation) : 
-          confirmBtn(onClickConfirmDropLocation)   
-        }
-
+          <button 
+            type="button" 
+            className={ "btn btn btn-dark " + classes["btn-confirm"] }
+            onClick={setConfirmed}
+          >
+            Confirm
+          </button>
         </GoogleMap>
       </LoadScript>
 
@@ -193,15 +206,7 @@ function Map(){
 }
 
 
-function confirmBtn(onClickHandler){
-  return <button 
-            type="button" 
-            className={ "btn btn btn-dark " + classes["btn-pickup"] }
-            onClick={onClickHandler}
-          >
-            Confirm
-          </button> 
-}
+
 
 
 export default Map;
