@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import classes from "./SlotSelector.module.css"
 
 function SlotSelector(){
