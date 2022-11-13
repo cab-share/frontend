@@ -3,6 +3,7 @@ import { useState } from "react";
 import {  BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import './App.css';
+import Home from "./container/Home/Home";
 import Map from './container/Map/Map.js'
 import SlotSelector from "./container/SlotSelector/SlotSelector";
 
@@ -15,6 +16,10 @@ function App() {
   return (
     <div className='App' >
       <div className='App-header'>
+
+      <Home className='App-container' />
+
+{/*         
         <Router>
           <Routes>
             <Route 
@@ -34,7 +39,8 @@ function App() {
                 />} 
             />
           </Routes>
-        </Router>
+        </Router> */}
+
       </div>
     </div>
   );
