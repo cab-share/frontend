@@ -5,14 +5,14 @@ import classes from "./Map.module.css"
 
 
 
-function Map({pickCoordinates, dropCoordinates, setPickCoordiantes, setDropCoordiantes }){
+function Map1({pickCoordinates, dropCoordinates, setPickCoordiantes, setDropCoordiantes }){
   const navigate =  useNavigate();
   // booking states
   const PICK_CONST = "Pick";
   const DROP_CONST = "Drop";
   const CONFIRM_CONST = "Confirm"
 
-  const selectingState = [PICK_CONST, DROP_CONST, CONFIRM_CONST];
+  // const selectingState = [PICK_CONST, DROP_CONST, CONFIRM_CONST];
 
   const intialCoordiante = { lat :  12.971891, lng : 77.641151};
   const [selector, setSelector ] = useState(0);
@@ -115,11 +115,11 @@ function Map({pickCoordinates, dropCoordinates, setPickCoordiantes, setDropCoord
   }
 
   function setLocation(e){
-      if(selector == 0){
+      if(selector === 0){
         console.log("Pick address: ", e.target.value);
         setPickAddress(e.target.value)
       }
-      else if(selector == 1) {
+      else if(selector === 1) {
         console.log("Drop address: ", e.target.value);
         setDropAddress(e.target.value)
       }
@@ -221,7 +221,7 @@ function Map({pickCoordinates, dropCoordinates, setPickCoordiantes, setDropCoord
 
 
 
-export default Map;
+export default Map1;
 
 
 

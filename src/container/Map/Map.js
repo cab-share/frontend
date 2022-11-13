@@ -1,44 +1,139 @@
-import {GoogleMap, LoadScript, Autocomplete, MarkerF, useJsApiLoader  } from '@react-google-maps/api';
-import {useEffect, useState } from "react";
+import { GoogleMap, useLoadScript, Autocomplete, MarkerF  } from '@react-google-maps/api';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../component/Spinner/Spinner';
 import classes from "./Map.module.css"
 
 
+function Map({coordinates, setCoordinates, airportCoordinates, pickOrDrop}){
 
-function Map({coordinates, setCoordinates, airportCoordinates, setAirpotCoordinates }){
-  // Navigation
-  const navigate =  useNavigate();
-  const [isConfirmed, setIsConfirmed] = useState(false);
-  useEffect( ()=>{
-    if(isConfirmed){
-      navigate("/select-slot");
+
+// navigation to slot selection page
+    const navigate =  useNavigate();
+    const [isConfirmed, setIsConfirmed] = useState(false);
+    useEffect( ()=>{
+        if(isConfirmed){
+        navigate("/select-slot");
+        }
+    }, [isConfirmed, navigate] )
+
+
+// load map
+    const [libraries] = useState(["places"]);
+    const {isLoaded, loadError} = useLoadScript({
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
+        libraries : libraries
+    });
+
+
+// Autocomplete
+    const [autocomplete, SetAutoComplete] = useState(null);
+    const [address, setAddress] = useState("");
+
+
+    function setLocation(e){
+          console.log("Address: ", e.target.value);
+          setAddress(e.target.value);
     }
-  }, [isConfirmed, navigate] )
 
-  // map loading
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey : process.env.REACT_APP_GOOGLE_MAP_API
-  });
+    function onPlaceChanged(){
+        if (autocomplete !== null) {
+            let place = autocomplete.getPlace();
+            console.log("place: " , place);
+            let lat = place?.geometry?.location?.lat();
+            let lng = place?.geometry?.location?.lng();
+            if(lat && lng){
+              let tempCoordinates = {
+                lat : lat,
+                lng : lng
+              }
+
+              setCoordinates(tempCoordinates);
+                if(place?.formatted_address)
+                    setAddress(place.formatted_address);
 
 
-  return <Spinner/>;
+            }
+          } else {
+            console.log('Autocomplete is not loaded yet!')
+          }
+    }
 
-  // return isLoaded ? renderMap() : <Spinner/>;
+
+// Marker
+
+function onDragMarker(e){ 
+    let dragedLat = e?.latLng?.lat();
+    let dragedLng = e?.latLng?.lng();
+    console.log(dragedLat, dragedLng);
+    if(dragedLat && dragedLng){
+      let tempCoordinates = {
+        lat : dragedLat,
+        lng : dragedLng
+      }
+      setCoordinates(tempCoordinates);
+    }
+  }
 
 
+
+    const map = (
+        <GoogleMap
+            id="google-map"
+            mapContainerStyle={{ height: "100vh", width: "100%",}}
+            zoom={11}
+            center={ coordinates?.lat ? coordinates : airportCoordinates}
+            onLoad={()=>{console.log("HEllo peter");}}
+            options={{ disableDefaultUI: true, info: false}}
+        >
+             <div className={classes["location-container"]} >
+                {/* Pick location */}
+                <Autocomplete
+                    onLoad={ autocompletePick => {SetAutoComplete(autocompletePick)}}
+                    onPlaceChanged={onPlaceChanged}
+                >
+                    <input
+                    type="text"
+                    placeholder="Enter pick location"
+                    className={classes["autocompleteInput"]}
+                    value={address}
+                    onChange={setLocation}
+                    onFocus={()=>{ }}
+                    />
+                </Autocomplete>
+            </div>
+
+            {/* Airport marker */}
+            <MarkerF
+                    position={airportCoordinates}
+                    // draggable={selector === 0}
+                    // onDrag={onDragMarker}
+                />
+
+                {/* location */}
+                <MarkerF
+                    position={coordinates}
+                    draggable={true}
+                    onDrag={onDragMarker}
+                    icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+                />
+
+                {/* Confirm button */}
+                <button 
+                    type="button" 
+                    className={ "btn btn btn-dark " + classes["btn-confirm"] }
+                    onClick={()=> setIsConfirmed(true)}
+                    disabled={ !(coordinates?.lat) }
+                >
+                    Confirm
+                </button>
+        </GoogleMap>);
+
+
+    if (loadError)
+        return <div>Map cannot be loaded right now, sorry.</div>
+    else    
+        return ( isLoaded ? map : <Spinner/>)
 }
 
-
-
-
-
 export default Map;
-
-
-
-
-
-
-
-

@@ -9,13 +9,13 @@ import SlotSelector from "./container/SlotSelector/SlotSelector";
 
 function App() {
   
-  const [airportCoordinates, setAirpotCoordinates] = useState({lat :  13.207265088970514, lng : 77.70749974067817}); 
+  const [airportCoordinates] = useState({lat :  13.207265088970514, lng : 77.70749974067817}); 
 
   const [coordinates, setCoordinates] = useState({});
-  const [type, setType] = useState(null);
+  const [pickOrDrop, setPickOrDrop] = useState(null);
 
-  const [pickCoordinates, setPickCoordiantes ] = useState({lat :  12.977821035502654, lng : 77.57216326868583});
-  const [dropCoordinates, setDropCoordiantes ] = useState({lat :  12.971891, lng : 77.641151});
+  // const [pickCoordinates, setPickCoordiantes ] = useState({lat :  12.977821035502654, lng : 77.57216326868583});
+  // const [dropCoordinates, setDropCoordiantes ] = useState({lat :  12.971891, lng : 77.641151});
 
 
   return (
@@ -29,8 +29,8 @@ function App() {
               element={
                 <Home 
                   className='App-container'
-                  type={type}
-                  setType={setType} 
+                  type={pickOrDrop}
+                  setType={setPickOrDrop} 
                   />
               }
             />
@@ -42,12 +42,13 @@ function App() {
                     coordinates={coordinates}
                     setCoordinates={setCoordinates}
                     airportCoordinates={airportCoordinates}
-                    setAirpotCoordinates={setAirpotCoordinates}
+                    pickOrDrop={pickOrDrop}
+                    // setAirpotCoordinates={setAirpotCoordinates}
 
-                    pickCoordinates = {pickCoordinates}
-                    setPickCoordiantes = {setPickCoordiantes}
-                    dropCoordinates={dropCoordinates}
-                    setDropCoordiantes={setDropCoordiantes}
+                    // pickCoordinates = {pickCoordinates}
+                    // setPickCoordiantes = {setPickCoordiantes}
+                    // dropCoordinates={dropCoordinates}
+                    // setDropCoordiantes={setDropCoordiantes}
                   />} 
             />
             {/* Select-slot */}
