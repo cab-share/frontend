@@ -14,7 +14,7 @@ function Home({type, setType}) {
     if(isConfirm)
       navigate("/select-location");
     console.log(type);
-  }, [isConfirm, navigate]);
+  }, [isConfirm, navigate, type]);
 
   function setPickOrDrop(CONST){
     setType(CONST);
