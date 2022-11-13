@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FilghtLand, FilghtTakeOff, TaxiIcon } from '../../component/Icons/Icons';
+import { FilghtLand, FilghtTakeOff} from '../../component/Icons/Icons';
 import { DROP_CONST, PICK_CONST } from '../../constants';
 import classes from './Home.module.css'
 
