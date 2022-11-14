@@ -6,12 +6,15 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { useState } from 'react';
 import classes from "./SlotSelector.module.css"
+import { Link } from 'react-router-dom';
 
 function SlotSelector(){
     const [value, setValue] = useState(Dayjs);
     console.log( "Value: ", value);
 
     const [selectedSlot, setSelectedSlot] = useState(0);
+
+    const URL = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86cfqwpluv43cd&redirect_uri=http://localhost:3000&state=foobar&scope=r_liteprofile";
 
     const slots = [
         "00:00 AM - 02:00 AM",
@@ -71,7 +74,13 @@ function SlotSelector(){
             className={ "btn btn btn-dark " + classes["btn-confirm"] }
             onClick={()=>{}}
           >
-            Confirm
+
+            <a 
+                target="_blank" 
+                href={URL}>
+                
+                Confirm
+            </a>
           </button>
 
     </div>
