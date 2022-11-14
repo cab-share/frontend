@@ -46,7 +46,7 @@ function SlotSelector(){
     )})
 
     return <div className={classes["container"]}>
-        <div className={classes["title"]} >
+        <div className={classes["slot-title"]} >
             Select date and slot
         </div>
         <div className={classes["date-selector"]}>
