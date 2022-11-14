@@ -2,7 +2,8 @@ import { Dayjs } from 'dayjs';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { useState } from 'react';
 import classes from "./SlotSelector.module.css"
 
@@ -45,17 +46,22 @@ function SlotSelector(){
     )})
 
     return <div className={classes["container"]}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-                label="Select Slot"
-                value={value}
-                onChange={(newValue) => {
-                    console.log(newValue);
-                setValue(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-            />
-        </LocalizationProvider>
+        <div className={classes["title"]} >
+            Select date and slot
+        </div>
+        <div className={classes["date-selector"]}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <MobileDatePicker
+                    label="Select Date"
+                    value={value}
+                    onChange={(newValue) => {
+                        console.log(newValue);
+                    setValue(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+            </LocalizationProvider>
+        </div>
         <div className={classes["row"]}>
             {slotElement}
         </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Helmet} from "react-helmet";
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -9,6 +10,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>My Title</title>
+      <link rel="canonical" href="http://mysite.com/example" />
+    </Helmet>
   </React.StrictMode>
 );
 

@@ -2,6 +2,7 @@ import { GoogleMap, useLoadScript, Autocomplete, MarkerF  } from '@react-google-
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../component/Spinner/Spinner';
+import { PICK_CONST } from '../../constants';
 import classes from "./Map.module.css"
 
 
@@ -49,10 +50,9 @@ function Map({coordinates, setCoordinates, airportCoordinates, pickOrDrop}){
               }
 
               setCoordinates(tempCoordinates);
-                if(place?.formatted_address)
-                    setAddress(place.formatted_address);
-
-
+              setMapCenter(tempCoordinates);
+              if(place?.formatted_address)
+                setAddress(place.formatted_address);
             }
           } else {
             console.log('Autocomplete is not loaded yet!')
@@ -75,6 +75,9 @@ function onDragMarker(e){
     }
   }
 
+//   Map center
+  const [mapCenter, setMapCenter] = useState({...airportCoordinates});
+
 
 
     const map = (
@@ -82,7 +85,7 @@ function onDragMarker(e){
             id="google-map"
             mapContainerStyle={{ height: "100vh", width: "100%",}}
             zoom={11}
-            center={ coordinates?.lat ? coordinates : airportCoordinates}
+            center={mapCenter}
             onLoad={()=>{console.log("HEllo peter");}}
             options={{ disableDefaultUI: true, info: false}}
         >
@@ -94,7 +97,7 @@ function onDragMarker(e){
                 >
                     <input
                     type="text"
-                    placeholder="Enter pick location"
+                    placeholder={`Enter ${ pickOrDrop === PICK_CONST ? "pick" : "drop" } location`}
                     className={classes["autocompleteInput"]}
                     value={address}
                     onChange={setLocation}
@@ -109,24 +112,27 @@ function onDragMarker(e){
                     // draggable={selector === 0}
                     // onDrag={onDragMarker}
                 />
+            {/* location */}
 
-                {/* location */}
+            { coordinates !== null ?
                 <MarkerF
                     position={coordinates}
                     draggable={true}
                     onDrag={onDragMarker}
                     icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
                 />
+                :null
+            }
 
-                {/* Confirm button */}
-                <button 
-                    type="button" 
-                    className={ "btn btn btn-dark " + classes["btn-confirm"] }
-                    onClick={()=> setIsConfirmed(true)}
-                    disabled={ !(coordinates?.lat) }
-                >
-                    Confirm
-                </button>
+            {/* Confirm button */}
+            <button 
+                type="button" 
+                className={ "btn btn btn-dark " + classes["btn-confirm"] }
+                onClick={()=> setIsConfirmed(true)}
+                disabled={ !(coordinates?.lat) }
+            >
+                Confirm
+            </button>
         </GoogleMap>);
 
 

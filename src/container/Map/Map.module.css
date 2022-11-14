@@ -29,10 +29,10 @@
     height:  40px ;
     padding:  0 12px ;
     font-size:  15px ;
-    position:  absolute ;
+    position:  absolute;
     left:  auto;
     margin-left:  -100px;
-    bottom: 80px;
+    bottom: 10%;
     z-index: 10;
 }
 
