@@ -3,9 +3,10 @@ import { useState } from "react";
 import {  BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import './App.css';
-import { URL_BOOKINGS, URL_HOME, URL_SELECT_LOCATION, URL_SELECT_SLOT } from "./constants";
+import { URL_BOOKINGS, URL_HOME, URL_LOGIN, URL_SELECT_LOCATION, URL_SELECT_SLOT } from "./constants";
 import Bookings from "./container/Bookings/Bookings";
 import Home from "./container/Home/Home";
+import Login from "./container/Login/Login";
 import Map from './container/Map/Map.js'
 import SlotSelector from "./container/SlotSelector/SlotSelector";
 
@@ -65,6 +66,11 @@ function App() {
             <Route 
               path={URL_BOOKINGS}
               element={<Bookings/>} 
+            />
+            {/* login */}
+            <Route 
+              path={URL_LOGIN}
+              element={<Login/>} 
             />
         </Routes>
       </Router>

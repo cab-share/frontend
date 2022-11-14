@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FilghtLand, FilghtTakeOff} from '../../component/Icons/Icons';
-import { DROP_CONST, PICK_CONST, NAV_PREV_BOOK } from '../../constants';
+import { DROP_CONST, PICK_CONST, NAV_PREV_BOOK, URL_BOOKINGS, URL_SELECT_LOCATION } from '../../constants';
 import classes from './Home.module.css'
 
 
@@ -11,12 +11,11 @@ function Home({type, setType}) {
   const [isConfirm, setIsConfirmed] = useState(false);
   
   useEffect( ()=>{
-
     if(isConfirm){
       if(type === NAV_PREV_BOOK)
-        navigate("/bookings");
+        navigate(URL_BOOKINGS);
       else
-        navigate("/select-location");
+        navigate(URL_SELECT_LOCATION);
     }
     console.log(type);
 

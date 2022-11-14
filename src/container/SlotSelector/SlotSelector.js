@@ -2,19 +2,27 @@ import { Dayjs } from 'dayjs';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classes from "./SlotSelector.module.css"
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { URL_LOGIN } from "../../constants";
 
 function SlotSelector(){
+    // Navigate
+    const navigate =  useNavigate();
+    const [isConfirm, setIsConfirmed] = useState(false);
+    useEffect( ()=>{
+        if(isConfirm){
+            navigate(URL_LOGIN)
+        }
+    }, [isConfirm, navigate]);
+
+    // slot selector
     const [value, setValue] = useState(Dayjs);
     console.log( "Value: ", value);
 
     const [selectedSlot, setSelectedSlot] = useState(0);
-
-    const URL = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86cfqwpluv43cd&redirect_uri=http://localhost:3000&state=foobar&scope=r_liteprofile";
 
     const slots = [
         "00:00 AM - 02:00 AM",
@@ -72,16 +80,10 @@ function SlotSelector(){
         <button 
             type="button" 
             className={ "btn btn btn-dark " + classes["btn-confirm"] }
-            onClick={()=>{}}
+            onClick={()=>{setIsConfirmed(true)}}
           >
-
-            <a 
-                target="_blank" 
-                href={URL}>
-                
-                Confirm
-            </a>
-          </button>
+            Confirm
+        </button>
 
     </div>
 }
