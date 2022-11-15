@@ -15,6 +15,7 @@ function Login(){
             <a  href={linkedInOAuth.getUrl()} className={classes["link"]}>                
                 <FontAwesomeIcon icon={faLinkedinIn} className={classes["font-awesome"]} />
                 <span> Login with LinkedIn </span>
+                <div> {linkedInOAuth.queryParams.redirect_uri}  </div>
             </a>
         
         </div>)
