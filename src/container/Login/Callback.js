@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 function Callback(){
 
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     console.log(searchParams.get("code"));
     console.log(searchParams.get("state"));
