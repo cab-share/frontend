@@ -1,18 +1,26 @@
-    // const URL = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86cfqwpluv43cd&redirect_uri=http://localhost:3000&state=foobar&scope=r_liteprofile%20r_emailaddress";
-
+import { URL_LOGIN_CALLBACK } from "../constants";
 
 export class LinkedInOAuth{
-    constructor(csrfKey = "foobar") {
+    constructor(csrfKey, redirect_uri) {
         this.baseurl = "https://www.linkedin.com/oauth/v2/authorization";
-        this.queryParams = {
-            response_type : "code",
-            client_id : process.env.REACT_APP_LINKEDIN_CLIENT_ID,
-            redirect_uri : "http://localhost:3000",
-            scope: "r_liteprofile%20r_emailaddress",
-            state : csrfKey
-        }
-    }
+        this.queryParams = {};
+        this.queryParams.response_type = "code";
+        this.queryParams.client_id = process.env.REACT_APP_LINKEDIN_CLIENT_ID;
+        this.queryParams.redirect_uri = redirect_uri + URL_LOGIN_CALLBACK;
+        this.queryParams.scope = "r_liteprofile";
+        this.queryParams.state = csrfKey;
 
+        console.log(this.queryParams);
+
+        // this.queryParams = {
+        //     response_type : "code",
+        //     client_id : process.env.REACT_APP_LINKEDIN_CLIENT_ID,
+        //     redirect_uri : redirect_uri + URL_LOGIN_CALLBACK,
+        //     scope: "r_liteprofile%20r_emailaddress",
+        //     scope: "r_liteprofile",
+        //     state : csrfKey
+        // }
+    }
     getUrl(){
         let URL = this.baseurl;
         let isFirst = true;
@@ -22,8 +30,4 @@ export class LinkedInOAuth{
         }
         return URL;
     }
-
-
-
-
 };

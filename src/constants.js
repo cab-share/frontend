@@ -10,6 +10,7 @@ export const URL_BOOKINGS = "/booking";
 export const URL_SELECT_LOCATION = "/select-location";
 export const URL_SELECT_SLOT = "/select-slot";
 export const URL_LOGIN = "/login"
+export const URL_LOGIN_CALLBACK = "/login/callback";
 
 
 
