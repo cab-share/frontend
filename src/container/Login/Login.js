@@ -6,9 +6,9 @@ import { faLinkedinIn} from '@fortawesome/free-brands-svg-icons'
 
 function Login(){
 
-    let linkedInOAuth = new LinkedInOAuth("csrftoken", "http://localhost:3000");
+    let linkedInOAuth = new LinkedInOAuth("csrftoken", window.location.origin);
 
-    console.log(linkedInOAuth.getUrl());
+    // console.log(linkedInOAuth.getUrl());
 
     return (
         <div className={classes["container"]} >
