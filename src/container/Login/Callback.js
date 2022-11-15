@@ -1,14 +1,46 @@
 import { useSearchParams } from "react-router-dom";
+import axios from 'axios';
+import { URL_LOGIN_CALLBACK } from "../../constants";
+import { useEffect } from "react";
 
 function Callback(){
-
-
     const [searchParams] = useSearchParams();
+    const searchPramCode = searchParams.get("code");
+    const searchPramState = searchParams.get("state");
 
-    console.log(searchParams.get("code"));
-    console.log(searchParams.get("state"));
+    async function getToken(){
+        try {
+            const accessURL = "https://www.linkedin.com/oauth/v2/accessToken";
+            const data = {};
+            const headers = {
+                'Content-Type': 'x-www-form-urlencoded',
+            }
+            const params = { 
+                grant_type:"authorization_code",
+                code: searchPramCode,
+                redirect_uri: (window.location.origin + URL_LOGIN_CALLBACK),
+                client_id:process.env.REACT_APP_LINKEDIN_CLIENT_ID,
+                client_secret: process.env.REACT_APP_LINKEDIN_CLIENT_SECRET
+            };
 
-    return <div></div>
+            const config = {params, headers};
+            const response = await axios.post( accessURL, data, config);
+            console.log("Response:- ", response);
+        } catch (error) {
+            console.log("Error:- ", error);
+        }
+    }
+
+    useEffect( ()=>{
+        getToken();
+    })
+
+
+
+    return <div>
+        <div> {searchPramCode} </div>
+        <div> {searchPramState} </div>
+    </div>
 }
 
 export default Callback;
