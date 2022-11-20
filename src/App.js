@@ -32,7 +32,7 @@ function App() {
               path={URL_HOME}
               element={
                 <Home 
-                  className='App-container'
+                  className='App-container' 
                   type={pickOrDrop}
                   setType={setPickOrDrop} 
                   />
