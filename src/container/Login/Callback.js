@@ -6,7 +6,7 @@ import { useEffect } from "react";
 function Callback(){
     const [searchParams] = useSearchParams();
     const searchPramCode = searchParams.get("code");
-    const searchPramState = searchParams.get("state");
+    const searchPramState = searchParams.get("state"); 
 
     async function getToken(){
         try {
