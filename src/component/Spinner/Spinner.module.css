@@ -4,19 +4,19 @@
     right: 0;
     top: 0;
     bottom: 0;
-    height: fit-content;
     margin: auto;
     display: flex;
     justify-content: center;
 }
 
 .container > .loader {
-    height: fit-content;
     font-size: 5em;
     padding: auto 0;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     display: flex;
     background-color: var(--back);
+    margin: auto;
+    height: 5em;
 }
 
 .loader  > span {
@@ -29,6 +29,7 @@
   color: var(--primary);
   box-shadow:  0 2px 5px var(--shadow);
   border-radius: 50%;
+  width: 2.5em;
 } 
 
 

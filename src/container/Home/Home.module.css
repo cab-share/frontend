@@ -33,7 +33,7 @@
 }
 
 .name > span {
-    margin: auto 2px;
+    margin: auto .45em;
 }
 
 /* For Mobile */
