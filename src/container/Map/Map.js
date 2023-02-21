@@ -1,20 +1,30 @@
 import { GoogleMap, useLoadScript, Autocomplete, MarkerF  } from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Spinner from '../../component/Spinner/Spinner';
-import { PICK_CONST } from '../../constants';
+import { PICK_CONST, URL_SELECT_SLOT } from '../../constants';
 import classes from "./Map.module.css"
 
 
 function Map({coordinates, setCoordinates, airportCoordinates, pickOrDrop}){
 
+    const location = useLocation()
 
+    console.log(location.state)
+    
 // navigation to slot selection page
     const navigate =  useNavigate();
     const [isConfirmed, setIsConfirmed] = useState(false);
     useEffect( ()=>{
         if(isConfirmed){
-        navigate("/select-slot");
+        navigate(URL_SELECT_SLOT,{
+            state: {
+                type: location.state.type,
+                address: address,
+                latitude: coordinates.lat,
+                longitude: coordinates.lng
+            }
+        });
         }
     }, [isConfirmed, navigate] )
 

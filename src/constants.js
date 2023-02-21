@@ -12,6 +12,6 @@ export const URL_SELECT_SLOT = "/select-slot";
 export const URL_LOGIN = "/login"
 export const URL_LOGIN_CALLBACK = "/login/callback";
 
-
+export const URL_PEER_SELECTION = '/peer-selection';
 
 

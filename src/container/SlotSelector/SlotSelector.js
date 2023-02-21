@@ -3,58 +3,55 @@ import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
 import { useEffect, useState } from 'react';
 import classes from "./SlotSelector.module.css"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { URL_LOGIN } from "../../constants";
+import axios from "axios";
 
 function SlotSelector(){
     // Navigate
     const navigate =  useNavigate();
+    const location = useLocation()
+    console.log(location.state)
     const [isConfirm, setIsConfirmed] = useState(false);
     useEffect( ()=>{
         if(isConfirm){
-            navigate(URL_LOGIN)
+            // axios.post('http://127.0.0.1:8000/api/cabshare/sharinglogic/fetchall/', {
+            //     "name": "tom hills",
+            //     "timing": value.format('YYYY-MM-DD')+" "+timevalue.format('HH:mm:ss'),
+            //     "latitude": location.state.latitude,
+            //     "longitude": location.state.longitude,
+            //     "type": location.state.type
+            //   })
+            //   .then(function (response) {
+            //     console.log(response);
+            //   })
+            //   .catch(function (error) {
+            //     console.log(error);
+            //   });
+              navigate(URL_LOGIN,{
+                state: {
+                    type: location.state.type,
+                    address: location.state.address,
+                    latitude: location.state.latitude,
+                    longitude: location.state.longitude,
+                    timing: value.format('YYYY-MM-DD')+" "+timevalue.format('HH:mm:ss')
+                }
+            });
         }
     }, [isConfirm, navigate]);
 
     // slot selector
     const [value, setValue] = useState(Dayjs);
+    const [timevalue, setTimeValue] = useState(Dayjs);
     console.log( "Value: ", value);
 
-    const [selectedSlot, setSelectedSlot] = useState(0);
+    
 
-    const slots = [
-        "00:00 AM - 02:00 AM",
-        "02:00 AM - 04:00 AM",
-        "04:00 AM - 06:00 AM",
-        "06:00 AM - 08:00 AM",
-        "08:00 AM - 10:00 AM",
-        "10:00 AM - 12:00 AM",
-        "12:00 AM - 02:00 PM",
-        "02:00 PM - 02:00 PM",
-        "04:00 PM - 06:00 PM",
-        "06:00 PM - 08:00 PM",
-        "08:00 PM - 10:00 PM",
-        "10:00 PM - 12:00 PM",
-    ];
 
-    const slotElement = [];
-
-    slots.forEach( (slot,idx) => {
-        slotElement.push(
-            <div 
-                onClick={ ()=>{setSelectedSlot(idx)} }
-                key={idx} 
-                className={
-                    classes["col"] + " " + 
-                    (
-                        idx === selectedSlot ? 
-                        classes["active"] : null 
-                    )}> 
-                    {slot} 
-            </div>
-    )})
+    
 
     return <div className={classes["container"]}>
         <div className={classes["slot-title"]} >
@@ -73,8 +70,19 @@ function SlotSelector(){
                 />
             </LocalizationProvider>
         </div>
-        <div className={classes["row"]}>
-            {slotElement}
+        <div className={classes["date-selector"]}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <MobileTimePicker
+                    className={classes["time-picker"]}
+                    label="Select Time"
+                    value={timevalue}
+                    onChange={(newTimeValue) => {
+                        console.log(newTimeValue);
+                    setTimeValue(newTimeValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+        </LocalizationProvider>
         </div>
 
         <button 

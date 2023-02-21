@@ -15,7 +15,11 @@ function Home({type, setType}) {
       if(type === NAV_PREV_BOOK)
         navigate(URL_BOOKINGS);
       else
-        navigate(URL_SELECT_LOCATION);
+        navigate(URL_SELECT_LOCATION, {
+          state: {
+            type: type
+          }
+        });
     }
     console.log(type);
 

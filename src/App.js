@@ -1,15 +1,15 @@
 
 import { useState } from "react";
 import {  BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import './App.css';
-import { URL_BOOKINGS, URL_HOME, URL_LOGIN, URL_LOGIN_CALLBACK, URL_SELECT_LOCATION, URL_SELECT_SLOT } from "./constants";
+import { URL_BOOKINGS, URL_HOME, URL_LOGIN, URL_LOGIN_CALLBACK, URL_SELECT_LOCATION, URL_SELECT_SLOT,URL_PEER_SELECTION } from "./constants";
 import Bookings from "./container/Bookings/Bookings";
 import Home from "./container/Home/Home";
 import Callback from "./container/Login/Callback";
 import Login from "./container/Login/Login";
 import Map from './container/Map/Map.js'
 import SlotSelector from "./container/SlotSelector/SlotSelector";
+import PeerSelection from "./container/PeerSelection/PeerSelection"
 
 function App() {
   
@@ -77,6 +77,11 @@ function App() {
             <Route 
               path={URL_LOGIN_CALLBACK}
               element={<Callback/>} 
+            />
+            {/* Peer selection */}
+            <Route 
+              path={URL_PEER_SELECTION}
+              element={<PeerSelection/>} 
             />
         </Routes>
       </Router>

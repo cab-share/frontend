@@ -19,7 +19,7 @@ function Callback(){
                 grant_type:"authorization_code",
                 code: searchPramCode,
                 redirect_uri: (window.location.origin + URL_LOGIN_CALLBACK),
-                client_id:process.env.REACT_APP_LINKEDIN_CLIENT_ID,
+                //client_id:process.env.REACT_APP_LINKEDIN_CLIENT_ID,
                 client_secret: process.env.REACT_APP_LINKEDIN_CLIENT_SECRET
             };
 
