@@ -1,0 +1,44 @@
+.container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: fit-content;
+    max-width: 80%;
+    margin: auto;
+    width: 400px;
+}
+
+.name {
+    margin: .5em 0em;
+    border-radius: .5em;
+    background-color: var(--back);
+    border: solid 2px var(--shadow);
+    border: transparent;
+    color: var(--primary);
+    box-shadow:  0 2px 5px var(--shadow);
+    text-align: center;
+    height: fit-content;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    padding: 20px 0;
+}
+
+.prev-book{
+    background-color: var(--shadow);
+    color: var(--back);
+}
+
+.name > span {
+    margin: auto .45em;
+}
+
+/* For Mobile */
+@media screen and (max-width: 540px) {
+    .container{
+        width: 90%;
+    }
+}
