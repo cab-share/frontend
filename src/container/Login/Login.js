@@ -83,6 +83,7 @@ function Login(){
     if(profile)
     navigate(URL_PEER_SELECTION,{
         state: {
+            name: profile.name,
             type: location.state.type,
             address: location.state.address,
             latitude: location.state.latitude,

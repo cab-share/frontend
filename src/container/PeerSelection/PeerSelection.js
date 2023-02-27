@@ -16,11 +16,11 @@ function PeerSelection(){
     const location = useLocation()
     console.log(location.state)
     const [ listItem, setlistItem ] = useState([]);
-    
+    const [apiData, setapiData ] = useState(0);
         
            useEffect(
             () => {axios.post('http://127.0.0.1:8000/api/cabshare/sharinglogic/fetchall/', {
-                "name": "tom hills",
+                "name": location.state.name,
                 "timing": location.state.timing,
                 "latitude": location.state.latitude,
                 "longitude": location.state.longitude,
@@ -31,13 +31,16 @@ function PeerSelection(){
                 const temp=[]
                 for(let i=0;i<response.data.data.length;i++)
                 {
-                    temp.push(<li>{response.data.data[i].name}</li>)
+                    temp.push(<div className={classes["name"]}><span className={classes["span-class"]}>{response.data.data[i].name}</span>
+                                  
+                                   <span className={classes["span-class"]}>{response.data.data[i].distance}</span>
+                                   </div>)
                 }
                 setlistItem(temp)
               })
               .catch(function (error) {
                 console.log(error);
-              });},[])
+              });},[apiData])
               
        
     
