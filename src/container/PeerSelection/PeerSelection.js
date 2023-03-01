@@ -19,7 +19,7 @@ function PeerSelection(){
     const [apiData, setapiData ] = useState(0);
         
            useEffect(
-            () => {axios.post('http://127.0.0.1:8000/api/cabshare/sharinglogic/fetchall/', {
+            () => {axios.post('http://54.178.221.144.nip.io/api/cabshare/sharinglogic/fetchall/', {
                 "name": location.state.name,
                 "timing": location.state.timing,
                 "latitude": location.state.latitude,
